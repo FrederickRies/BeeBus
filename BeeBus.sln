@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeeBus", "BeeBus\BeeBus.csproj", "{24178FDB-DB9E-43B4-A32C-0CA83D53EA51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeeBus.Core", "src\BeeBus.Core\BeeBus.Core.csproj", "{24178FDB-DB9E-43B4-A32C-0CA83D53EA51}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3C8D483F-8F8C-4FED-A7FF-ACE57E2BF64C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0D9DDBA5-91A2-4535-BDD1-D1B06F9B891B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeeBus.Core.Tests", "tests\BeeBus.Core.Tests\BeeBus.Core.Tests.csproj", "{C0090E52-12FD-48DA-98CE-D8EA3EC206DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +21,17 @@ Global
 		{24178FDB-DB9E-43B4-A32C-0CA83D53EA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24178FDB-DB9E-43B4-A32C-0CA83D53EA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24178FDB-DB9E-43B4-A32C-0CA83D53EA51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0090E52-12FD-48DA-98CE-D8EA3EC206DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0090E52-12FD-48DA-98CE-D8EA3EC206DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0090E52-12FD-48DA-98CE-D8EA3EC206DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0090E52-12FD-48DA-98CE-D8EA3EC206DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{24178FDB-DB9E-43B4-A32C-0CA83D53EA51} = {3C8D483F-8F8C-4FED-A7FF-ACE57E2BF64C}
+		{C0090E52-12FD-48DA-98CE-D8EA3EC206DB} = {0D9DDBA5-91A2-4535-BDD1-D1B06F9B891B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BDA23C2E-27E5-43AC-885C-CB1C7F40F2FB}
