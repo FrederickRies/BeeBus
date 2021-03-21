@@ -41,7 +41,7 @@ namespace BeeBus.Core
             MessageBus bus = new MessageBus(serviceProvider);
 
             // Act/Assert
-            var resultTask = bus.SendAsync(new MessageWithResponse(), CancellationToken.None);
+            var resultTask = bus.SendAsync<MessageWithResponse, string>(new MessageWithResponse(), CancellationToken.None);
 
             await Assert.ThrowsAsync<NotSupportedException>(() => resultTask);
         }
