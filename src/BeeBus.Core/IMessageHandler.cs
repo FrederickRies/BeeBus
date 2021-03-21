@@ -3,11 +3,13 @@ using System.Threading.Tasks;
 
 namespace BeeBus
 {
-    
-    public interface IMessageHandler
+    public interface IMessageHandler<TMessage> where TMessage : IMessage
     {
-        Task HandleAsync<TMessage>(TMessage command, CancellationToken cancellation) where TMessage : IMessage;
+        Task HandleAsync(TMessage command, CancellationToken cancellation);
+    }
 
-        Task<TMessageResponse> HandleAsync<TMessage, TMessageResponse>(TMessage command, CancellationToken cancellation) where TMessage : IMessage<TMessageResponse>;
+    public interface IMessageHandler<TMessage, TResponse> where TMessage : IMessage<TResponse>
+    {
+        Task<TResponse> HandleAsync(TMessage command, CancellationToken cancellation);
     }
 }
