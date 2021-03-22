@@ -40,10 +40,53 @@ namespace BeeBus.Core
             var serviceProvider = serviceProviderFactory.CreateServiceProvider(new ServiceCollection());
             MessageBus bus = new MessageBus(serviceProvider);
 
-            // Act/Assert
+            // Act
             var resultTask = bus.SendAsync<MessageWithResponse, string>(new MessageWithResponse(), CancellationToken.None);
 
+            //Assert
             await Assert.ThrowsAsync<NotSupportedException>(() => resultTask);
+        }
+
+
+        /// <summary>
+        /// Check if a registred handler of a basic message is found correctly by the bus.
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task BudRetrieveHandlerForBasicMessageWhenRegistred()
+        {
+            // Arrange
+            var serviceProviderFactory = new DefaultServiceProviderFactory();
+            var serviceProvider = serviceProviderFactory.CreateServiceProvider(new ServiceCollection());
+            MessageBus bus = new MessageBus(serviceProvider);
+
+            // Act
+            var message = new BasicMessage();
+            await bus.SendAsync(message, CancellationToken.None);
+
+            // Assert
+            Assert.True(message.Handled, "The message does not appear to have been handled.");
+        }
+
+        /// <summary>
+        /// Check if a registred handler of a message with response is found correctly by the bus.
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task BudRetrieveHandlerForMessageWithResponseWhenRegistred()
+        {
+            // Arrange
+            var serviceProviderFactory = new DefaultServiceProviderFactory();
+            var serviceProvider = serviceProviderFactory.CreateServiceProvider(new ServiceCollection());
+            MessageBus bus = new MessageBus(serviceProvider);
+
+            // Act
+            var message = new MessageWithResponse();
+            var result = await bus.SendAsync<MessageWithResponse, string>(new MessageWithResponse(), CancellationToken.None);
+
+            // Assert
+            Assert.True(message.Handled, "The message does not appear to have been handled.");
+            Assert.True(result == "OK", "The output of the handler is not the one expected.");
         }
     }
 }
