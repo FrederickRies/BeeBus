@@ -5,7 +5,6 @@ namespace BeeBus.Core.Dummies
 {
     public class BasicMessageHandler : IMessageHandler<BasicMessage>
     {
-
         public Task HandleAsync(BasicMessage message, CancellationToken cancellation)
         {
             message.Handled = true;
