@@ -9,7 +9,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3C8D483F-8F8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0D9DDBA5-91A2-4535-BDD1-D1B06F9B891B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeeBus.Core.Tests", "tests\BeeBus.Core.Tests\BeeBus.Core.Tests.csproj", "{C0090E52-12FD-48DA-98CE-D8EA3EC206DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeeBus.Core.Tests", "tests\BeeBus.Core.Tests\BeeBus.Core.Tests.csproj", "{C0090E52-12FD-48DA-98CE-D8EA3EC206DB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{2E683666-F74F-4054-B4DF-9E065B428B68}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
