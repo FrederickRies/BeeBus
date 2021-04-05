@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace BeeBus.Core
 {
@@ -12,59 +11,58 @@ namespace BeeBus.Core
     {
         public static IServiceCollection AddBeeBus(this IServiceCollection services, params Assembly[] assemblies)
         {
+            // Registers the bus himself
             services.TryAddScoped<IMessageBus, MessageBus>();
 
-            // Find all handlers in the provided assembly
-            
-
-            foreach (var handler in handlers)
-            {
-
-            }
-            assembliesTypes
-                .GetInterfacesWithImplementationOfType(typeof(IMessageHandler<>))
-                .Register(services);
-
-            // Enregitrement des gestionnaires de commandes renvoyant une réponse
-            assembliesTypes
-                .GetInterfacesWithImplementationOfType(typeof(IMessageHandler<,>))
-                .Register(services);
+            // Find all handlers in the provided assemblies and registers them dependantly from their type.
+            services.SeekAndRegister(assemblies);
 
             return services;
         }
 
-        public static IEnumerable<(Type Interface, Type Implementation)> RetrieveAndRegister<THandlerType>(IEnumerable<Assembly> assemblies, Type openGenericInterfaceImplementationType)
+        /// <summary>
+        /// Retrieves all handlers defined in the provided assemblies.
+        /// </summary>
+        /// <param name="assemblies"></param>
+        /// <returns></returns>
+        public static IEnumerable<Type> RetrieveHandlersFromAssemblies(IEnumerable<Assembly> assemblies)
         {
             // Retrieve all handlers independantly from their types and their implementations
-            var handlers = assemblies
+            return assemblies
                 .SelectMany(a => a.DefinedTypes)
                 .Where(t => t.IsClass && !t.IsAbstract &&
                     t.GetInterfaces()
-                    .Any(i => i.IsGenericType && 
+                    .Any(i => i.IsGenericType &&
                         i.GetGenericTypeDefinition() == typeof(IHandler<>)));
-            foreach (var  in handlers)
-            {
-                foreach (var handlers)
-            }
-                
-
-            foreach ()
-
-            // Pour tous les types implémentant une interface du type recherché
-            var list = new List<(Type Interface, Type Implementation)>();
-            var implementations = assembliesTypes.GetTypeOf(openGenericInterfaceImplementationType);
-            foreach (var implementation in implementations)
-            {
-                // Identification de toutes les interfaces du type de demandé implémentées dans le type retourné
-                var interfaces = implementation.GetInterfaces().Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == openGenericInterfaceImplementationType);
-                foreach (var interfaceType in interfaces)
-                {
-                    list.Add((interfaceType, implementation));
-                }
-            }
-            return list;
         }
 
+        /// <summary>
+        /// Searchiiiiiinnnnnnng seek and register...
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="assemblies"></param>
+        public static void SeekAndRegister(this IServiceCollection services, IEnumerable<Assembly> assemblies)
+        {
+            foreach (var handlerImplementation in RetrieveHandlersFromAssemblies(assemblies))
+            {
+                services.RegisterAll(typeof(IMessageHandler<>), handlerImplementation);
+                services.RegisterAll(typeof(IMessageHandler<,>), handlerImplementation);
+            }
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="handlerType"></param>
+        /// <param name="handlerImplementation"></param>
+        public static void RegisterAll(this IServiceCollection services, Type handlerType, Type handlerImplementation)
+        {
+            var handlerInterfaces = handlerType.GetInterfaces().Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == handlerType);
+            foreach (var handlerInterface in handlerInterfaces)
+            {
+                services.Add(new ServiceDescriptor(handlerInterface, handlerImplementation, ServiceLifetime.Scoped));
+            }
+        }
     }
 }
