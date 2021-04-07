@@ -14,18 +14,19 @@ namespace BeeBus.Core
         /// </summary>
         /// <returns></returns>
         [Fact]
-        public async Task ThowExceptionWhenNoHandlerFoundForBasicMessage()
+        public async Task WhenWhenNoHandlerFoundForBasicMessage_ThenThowException()
         {
             // Arrange
-            var serviceProviderFactory = new DefaultServiceProviderFactory();
-            var serviceProvider = serviceProviderFactory.CreateServiceProvider(new ServiceCollection());
-            MessageBus bus = new MessageBus(serviceProvider);
+            var services = new ServiceCollection();
+            using var serviceProvider = services.BuildServiceProvider(true);
+            using var scope = serviceProvider.CreateScope();
+            MessageBus bus = new MessageBus(scope.ServiceProvider);
 
             // Act
             var resultTask = bus.SendAsync(new BasicMessage(), CancellationToken.None);
 
             // Assert
-            await Assert.ThrowsAsync<NotSupportedException>(() => resultTask);
+            await Assert.ThrowsAsync<InvalidOperationException>(() => resultTask);
         }
 
         /// <summary>
@@ -33,18 +34,19 @@ namespace BeeBus.Core
         /// </summary>
         /// <returns></returns>
         [Fact]
-        public async Task ThowExceptionWhenNoHandlerFoundForMessageWithResponse()
+        public async Task WhenNoHandlerFoundForMessageWithResponse_ThenThrowException()
         {
             // Arrange
-            var serviceProviderFactory = new DefaultServiceProviderFactory();
-            var serviceProvider = serviceProviderFactory.CreateServiceProvider(new ServiceCollection());
-            MessageBus bus = new MessageBus(serviceProvider);
+            var services = new ServiceCollection();
+            using var serviceProvider = services.BuildServiceProvider(true);
+            using var scope = serviceProvider.CreateScope();
+            MessageBus bus = new MessageBus(scope.ServiceProvider);
 
             // Act
             var resultTask = bus.SendAsync<MessageWithResponse, string>(new MessageWithResponse(), CancellationToken.None);
 
             //Assert
-            await Assert.ThrowsAsync<NotSupportedException>(() => resultTask);
+            await Assert.ThrowsAsync<InvalidOperationException>(() => resultTask);
         }
 
 
@@ -53,12 +55,14 @@ namespace BeeBus.Core
         /// </summary>
         /// <returns></returns>
         [Fact]
-        public async Task BudRetrieveHandlerForBasicMessageWhenRegistred()
+        public async Task WhenHandlerRegisteredForBasicMessage_ThenBusHandlesMessage()
         {
             // Arrange
-            var serviceProviderFactory = new DefaultServiceProviderFactory();
-            var serviceProvider = serviceProviderFactory.CreateServiceProvider(new ServiceCollection());
-            MessageBus bus = new MessageBus(serviceProvider);
+            var services = new ServiceCollection();
+            services.AddScoped<IMessageHandler<BasicMessage>, BasicMessageHandler>();
+            using var serviceProvider = services.BuildServiceProvider(true);
+            using var scope = serviceProvider.CreateScope();
+            MessageBus bus = new MessageBus(scope.ServiceProvider);
 
             // Act
             var message = new BasicMessage();
@@ -73,12 +77,14 @@ namespace BeeBus.Core
         /// </summary>
         /// <returns></returns>
         [Fact]
-        public async Task BudRetrieveHandlerForMessageWithResponseWhenRegistred()
+        public async Task WhenHandlerRegisteredForMessageWithResponse_ThenBusHandlesMessage()
         {
             // Arrange
-            var serviceProviderFactory = new DefaultServiceProviderFactory();
-            var serviceProvider = serviceProviderFactory.CreateServiceProvider(new ServiceCollection());
-            MessageBus bus = new MessageBus(serviceProvider);
+            var services = new ServiceCollection(); 
+            services.AddScoped<IMessageHandler<MessageWithResponse, string>, MessageWithResponseHandler>();
+            using var serviceProvider = services.BuildServiceProvider(true);
+            using var scope = serviceProvider.CreateScope();
+            MessageBus bus = new MessageBus(scope.ServiceProvider);
 
             // Act
             var message = new MessageWithResponse();

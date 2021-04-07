@@ -12,7 +12,7 @@ namespace BeeBus.Core
         public static IServiceCollection AddBeeBus(this IServiceCollection services, params Assembly[] assemblies)
         {
             // Registers the bus himself
-            services.TryAddScoped<IMessageBus, MessageBus>();
+            services.TryAddSingleton<IMessageBus, MessageBus>();
 
             // Find all handlers in the provided assemblies and registers them dependantly from their type.
             services.SeekAndRegister(assemblies);
