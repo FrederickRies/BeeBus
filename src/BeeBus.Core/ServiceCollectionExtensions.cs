@@ -58,7 +58,7 @@ namespace BeeBus.Core
         /// <param name="handlerImplementation"></param>
         public static void RegisterAll(this IServiceCollection services, Type handlerType, Type handlerImplementation)
         {
-            var handlerInterfaces = handlerType.GetInterfaces().Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == handlerType);
+            var handlerInterfaces = handlerImplementation.GetInterfaces().Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == handlerType);
             foreach (var handlerInterface in handlerInterfaces)
             {
                 services.Add(new ServiceDescriptor(handlerInterface, handlerImplementation, ServiceLifetime.Scoped));

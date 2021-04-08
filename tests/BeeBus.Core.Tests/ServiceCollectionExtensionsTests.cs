@@ -17,17 +17,16 @@ namespace BeeBus.Core
         {
             // Arrange
             var services = new ServiceCollection();
-            services.AddScoped<IMessageHandler<BasicMessage>, BasicMessageHandler>();
-            using var serviceProvider = services.BuildServiceProvider(true);
 
             // Act
             services.AddBeeBus(typeof(BasicMessage).Assembly);
+            using var serviceProvider = services.BuildServiceProvider(false);
             using var scope = serviceProvider.CreateScope();
 
             // Assert
-            Assert.NotNull(scope.ServiceProvider.GetService<IMessageBus>());
-            Assert.NotNull(scope.ServiceProvider.GetService<IMessageHandler<BasicMessage>>());
-            Assert.NotNull(scope.ServiceProvider.GetService<IMessageHandler<MessageWithResponse, string>>());
+            Assert.True(null != scope.ServiceProvider.GetService<IMessageBus>(), string.Format(Messages.CouldNotResolveType, typeof(IMessageBus).Name));
+            Assert.True(null != scope.ServiceProvider.GetService<IMessageHandler<BasicMessage>>(), string.Format(Messages.CouldNotResolveType, typeof(IMessageHandler<BasicMessage>).Name));
+            Assert.True(null != scope.ServiceProvider.GetService<IMessageHandler<MessageWithResponse, string>>(), string.Format(Messages.CouldNotResolveType, typeof(IMessageHandler<MessageWithResponse>).Name));
         }
     }
 }

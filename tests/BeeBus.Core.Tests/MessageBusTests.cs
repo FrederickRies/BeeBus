@@ -69,7 +69,7 @@ namespace BeeBus.Core
             await bus.SendAsync(message, CancellationToken.None);
 
             // Assert
-            Assert.True(message.Handled, "The message does not appear to have been handled.");
+            Assert.True(message.Handled, Messages.MessageWasNotHandled);
         }
 
         /// <summary>
@@ -88,11 +88,11 @@ namespace BeeBus.Core
 
             // Act
             var message = new MessageWithResponse();
-            var result = await bus.SendAsync<MessageWithResponse, string>(new MessageWithResponse(), CancellationToken.None);
+            var response = await bus.SendAsync<MessageWithResponse, string>(message, CancellationToken.None);
 
             // Assert
-            Assert.True(message.Handled, "The message does not appear to have been handled.");
-            Assert.True(result == "OK", "The output of the handler is not the one expected.");
+            Assert.True(message.Handled, Messages.MessageWasNotHandled);
+            Assert.True(response == "OK", Messages.InconsistentResponse);
         }
     }
 }
