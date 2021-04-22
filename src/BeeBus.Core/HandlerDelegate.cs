@@ -10,7 +10,7 @@ namespace BeeBus.Core
     /// <param name="message">The message to handle.</param>
     /// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
     /// <returns></returns>
-    public delegate Task RequestDelegate<in TMessage>(TMessage message, CancellationToken cancellationToken);
+    public delegate Task HandlerDelegate<in TMessage>(TMessage message, CancellationToken cancellationToken);
 
     /// <summary>
     /// A function that can process a message and produce a response
@@ -20,5 +20,5 @@ namespace BeeBus.Core
     /// <param name="message">The message to handle.</param>
     /// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
     /// <returns></returns
-    public delegate Task<TResponse> RequestDelegate<in TMessage, TResponse>(TMessage message, CancellationToken cancellationToken);
+    public delegate Task<TResponse> HandlerDelegate<in TMessage, TResponse>(TMessage message, CancellationToken cancellationToken);
 }

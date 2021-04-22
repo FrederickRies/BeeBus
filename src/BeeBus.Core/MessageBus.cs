@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BeeBus.Core;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,25 +23,28 @@ namespace BeeBus
         }
 
         /// <inheritdoc/>
-        public async Task SendAsync<TMessage>(TMessage message, CancellationToken cancellation) where TMessage : IMessage
+        public async Task SendAsync<TMessage>(TMessage message, CancellationToken cancellationToken) where TMessage : IMessage
         {
             var handler = GetHandler<IMessageHandler<TMessage>>();
             if (handler == null)
             {
                 throw new InvalidOperationException(string.Format(HandlerNotFound, typeof(TMessage)));
             }
-            await handler.HandleAsync(message, cancellation);
+            HandlerDelegate<TMessage> handlerDelegate = handler.HandleAsync;
+            await handlerDelegate.Invoke(message, cancellationToken);
         }
 
         /// <inheritdoc/>
-        public async Task<TResponse> SendAsync<TMessage, TResponse>(TMessage message, CancellationToken cancellation) where TMessage : IMessage<TResponse>
+        public async Task<TResponse> SendAsync<TMessage, TResponse>(TMessage message, CancellationToken cancellationToken) where TMessage : IMessage<TResponse>
         {
             var handler = GetHandler<IMessageHandler<TMessage, TResponse>>();
             if (handler == null)
             {
                 throw new InvalidOperationException(string.Format(HandlerNotFound, typeof(TMessage)));
             }
-            return await handler.HandleAsync(message, cancellation);
+            HandlerDelegate<TMessage, TResponse> handlerDelegate = handler.HandleAsync;
+            await handlerDelegate.Invoke(message, cancellationToken);
+            return await handlerDelegate.Invoke(message, cancellationToken);
         }
 
         /// <summary>

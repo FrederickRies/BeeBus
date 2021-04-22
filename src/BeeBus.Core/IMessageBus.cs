@@ -17,7 +17,7 @@ namespace BeeBus
         /// <param name="message">The message to handle.</param>
         /// <param name="cancellation">The token to monitor for cancellation requests.</param>
         /// <returns>A <see cref="Task"/> that indiquate the completion of the handling of the message.</returns>
-        Task SendAsync<TMessage>(TMessage message, CancellationToken cancellation) where TMessage : IMessage;
+        Task SendAsync<TMessage>(TMessage message, CancellationToken cancellationToken) where TMessage : IMessage;
 
         /// <summary>
         /// send a message to the bus awaiting processing and the return of the associated response.
@@ -28,6 +28,6 @@ namespace BeeBus
         /// <param name="message">The message to handle.</param>
         /// <param name="cancellation">The token to monitor for cancellation requests.</param>
         /// <returns>A <see cref="Task"/> that on completion returns the associated response for the message.</returns>
-        Task<TMessageResponse> SendAsync<TMessage, TMessageResponse>(TMessage message, CancellationToken cancellation) where TMessage : IMessage<TMessageResponse>;
+        Task<TMessageResponse> SendAsync<TMessage, TMessageResponse>(TMessage message, CancellationToken cancellationToken) where TMessage : IMessage<TMessageResponse>;
     }
 }
