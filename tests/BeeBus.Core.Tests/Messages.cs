@@ -1,7 +1,7 @@
 ﻿
 namespace BeeBus.Core
 {
-    public class Messages
+    public static class Messages
     {
         public const string CouldNotResolveType = "The type \"{0}\" could not be resolved from the service provider.";
 

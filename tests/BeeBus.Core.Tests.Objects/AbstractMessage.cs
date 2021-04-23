@@ -1,10 +1,10 @@
-﻿namespace BeeBus.Core.Dummies
+﻿namespace BeeBus.Core
 {
-    public class BasicMessage : IMessage
+    public class AbstractMessage : IMessage
     {
         public bool Handled { get; set; }
 
-        public BasicMessage()
+        public AbstractMessage()
         {
             Handled = false;
         }

@@ -1,4 +1,4 @@
-﻿namespace BeeBus.Core.Dummies
+﻿namespace BeeBus.Core
 {
     public class InterfaceMessage : IMessage
     {

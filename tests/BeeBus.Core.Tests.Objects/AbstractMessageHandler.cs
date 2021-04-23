@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace BeeBus.Core.Dummies
+namespace BeeBus.Core
 {
     public abstract class AbstractMessageHandler : IMessageHandler<AbstractMessage>
     {

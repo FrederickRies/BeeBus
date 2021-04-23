@@ -1,0 +1,29 @@
+<Project>
+
+  <PropertyGroup>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+	<Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsTestProject>false</IsTestProject>
+    <IsTestProject Condition="$(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup Label="Test tooling" Condition="'$(IsTestProject)' == 'true'">
+    <PackageReference Include="coverlet.collector" Version="3.0.3" />
+    <PackageReference Include="coverlet.msbuild" Version="3.0.3" />
+  </ItemGroup>
+    
+  
+  <ItemGroup Label="Analyzers">
+    <PackageReference Include="IDisposableAnalyzers" Version="3.4.13" />
+  </ItemGroup>
+
+  <PropertyGroup>
+      <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
+      <SolutionRoot>$([System.IO.Directory]::GetParent('$(MSBuildProjectDirectory)'))../</SolutionRoot>
+      <SolutionDir Condition="'$(SolutionDir)'==''">$(MSBuildThisFileDirectory)</SolutionDir>
+  </PropertyGroup>
+
+</Project>
