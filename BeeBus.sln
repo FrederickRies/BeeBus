@@ -21,9 +21,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "perfs", "perfs", "{8CF0D378-74CC-4484-BAC0-DA09A4924009}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeeBus.Benchmark", "perfs\BeeBus.Benchmark\BeeBus.Benchmark.csproj", "{D2976792-AC35-4CE3-A883-1719C829EE69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeeBus.Benchmarks", "perfs\BeeBus.Benchmarks\BeeBus.Benchmarks.csproj", "{D2976792-AC35-4CE3-A883-1719C829EE69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeeBus.Core.Tests.Objects", "tests\BeeBus.Core.Tests.Objects\BeeBus.Core.Tests.Objects.csproj", "{2018715F-4023-42F1-8659-1E0A002DB7DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeeBus.Core.Tests.Objects", "tests\BeeBus.Core.Tests.Objects\BeeBus.Core.Tests.Objects.csproj", "{2018715F-4023-42F1-8659-1E0A002DB7DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
