@@ -17,7 +17,7 @@ namespace BeeBus.Core
             // Find all handlers in the provided assemblies and registers them dependantly from their type.
             services.SeekAndRegister(assemblies);
 
-            return services;
+            return new BusBuilder(services);
         }
 
         /// <summary>
