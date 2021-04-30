@@ -9,7 +9,7 @@ namespace BeeBus.Core
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddBeeBus(this IServiceCollection services, params Assembly[] assemblies)
+        public static BusBuilder AddBeeBus(this IServiceCollection services, params Assembly[] assemblies)
         {
             // Registers the bus himself
             services.TryAddSingleton<IMessageBus, MessageBus>();
